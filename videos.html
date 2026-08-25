@@ -1,8 +1,4 @@
-<!-- ============================================ -->
-<!-- Модуль: videos.html
-<!-- Название: видео                             -->
-<!-- ============================================ -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -10,34 +6,466 @@
   <title>Видео — ФПК МИИГАиК 1994</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    :root { --bg:#020b24; --card-bg:rgba(8,25,70,0.3); --accent:#4da8da; --text:#e6f0ff; --muted:#b0c4de; --border:rgba(100,160,220,0.25); }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; padding-bottom:2rem; background-image:radial-gradient(circle at 70% 40%, #0a2a6a, #020b24 70%); overflow-x:hidden; }
-    .twinkle-star { position:fixed; border-radius:50%; background:#fff; pointer-events:none; z-index:1; animation:tw 2s infinite; }
-    @keyframes tw { 0%,100%{opacity:0.2;} 50%{opacity:1; transform:scale(1.8);} }
-    .satellite-container { position:fixed; inset:0; z-index:4; pointer-events:none; }
-    .satellite { position:absolute; color:var(--accent); font-size:2rem; animation:fs linear infinite; }
-    .satellite:nth-child(1){top:8%; animation-duration:45s; font-size:2.8rem;}
-    .satellite:nth-child(2){top:28%; animation-duration:60s; font-size:2rem;}
-    .satellite:nth-child(3){top:55%; animation-duration:38s; font-size:3.2rem;}
-    .satellite:nth-child(4){top:75%; animation-duration:52s; font-size:1.8rem;}
-    .satellite:nth-child(5){top:5%; animation-duration:70s; font-size:2.5rem;}
-    .satellite:nth-child(6){top:45%; animation-duration:48s; font-size:2rem;}
-    @keyframes fs { 100%{transform:translateX(120vw);} }
-    .container { position:relative; z-index:2; max-width:1100px; width:100%; padding:1.2rem; }
-    header { background:rgba(5,18,50,0.55); backdrop-filter:blur(15px); border-radius:2rem; padding:0.8rem 1.2rem; border:1px solid var(--border); margin-bottom:1.5rem; z-index:100; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
-    .logo { font-size:1.4rem; background:linear-gradient(#c2e2ff,#4da8da); -webkit-background-clip:text; color:transparent; font-weight:700; }
-    .menu-toggle { display:none; background:rgba(30,60,120,0.7); border:1px solid rgba(100,160,220,0.6); color:#fff; font-size:1.4rem; padding:0.4rem 0.8rem; border-radius:0.6rem; cursor:pointer; }
-    nav { display:flex; flex-wrap:wrap; gap:0.5rem; }
-    nav a { color:#fff; text-decoration:none; padding:0.35rem 0.8rem; border-radius:1.2rem; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.3rem; }
-    nav a i { color:var(--accent); }
-    nav a:hover { background:rgba(77,168,218,0.3); }
-    nav a.active { background:var(--accent); color:#021024; }
-    nav a.active i { color:#021024; }
-    @media(max-width:768px){ .menu-toggle{display:block;} nav{display:none; position:absolute; top:100%; right:0; flex-direction:column; background:rgba(3,12,38,0.98); border-radius:1rem; padding:1rem; min-width:240px; z-index:1000;} nav.show{display:flex;} nav a{padding:0.8rem 1rem; font-size:1rem; background:rgba(15,40,90,0.7);} }
-    .submenu { display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; margin-bottom:1.5rem; }
-    .submenu a { color:#fff; text-decoration:none; padding:0.3rem 0.7rem; border-radius:1rem; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.3rem; }
-    .submenu a i { color:var(--accent); }
-    .submenu a.active { background:var(--accent); color:#021024; }
-    .submenu a.active i { color:#021024; }
-    .card { background:var(--card-bg); border:1px solid rgba(100,160
+    :root {
+      --bg: #020b24;
+      --card-bg: rgba(8, 25, 70, 0.3);
+      --accent: #4da8da;
+      --text: #e6f0ff;
+      --muted: #b0c4de;
+      --border: rgba(100, 160, 220, 0.25);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.2rem;
+      background-image: radial-gradient(circle at 70% 40%, #0a2a6a 0%, #020b24 70%);
+      overflow-x: hidden;
+    }
+    .twinkle-star {
+      position: fixed; border-radius: 50%; background: #fff;
+      pointer-events: none; z-index: 1;
+      animation: starTwinkle 2s infinite;
+    }
+    @keyframes starTwinkle { 0%,100%{opacity:0.2;} 50%{opacity:1; transform:scale(1.8);} }
+    .satellite-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 4; overflow: hidden;
+    }
+    .satellite {
+      position: absolute; font-size: 2rem; color: var(--accent);
+      opacity: 0.8; animation: flySatellite linear infinite;
+    }
+    .satellite:nth-child(1) { top: 5%; animation-duration: 20s; font-size: 2.5rem; }
+    .satellite:nth-child(2) { top: 25%; animation-duration: 25s; font-size: 2rem; }
+    .satellite:nth-child(3) { top: 50%; animation-duration: 18s; font-size: 3rem; }
+    .satellite:nth-child(4) { top: 70%; animation-duration: 22s; font-size: 1.8rem; }
+    .satellite:nth-child(5) { top: 10%; animation-duration: 28s; font-size: 2.2rem; }
+    .satellite:nth-child(6) { top: 40%; animation-duration: 15s; font-size: 1.9rem; }
+    @keyframes flySatellite {
+      0% { transform: translateX(-10vw) rotate(0deg); }
+      100% { transform: translateX(110vw) rotate(360deg); }
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      background: rgba(5, 18, 50, 0.55);
+      backdrop-filter: blur(15px);
+      border-radius: 2rem;
+      padding: 0.8rem 1.2rem;
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .header-left { display: flex; flex-direction: column; align-items: flex-start; }
+    .logo {
+      font-weight: 700; font-size: 1.4rem;
+      background: linear-gradient(135deg, #c2e2ff, #4da8da);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .header-subtitle { font-size: 0.7rem; color: var(--muted); }
+    .menu-toggle {
+      display: none; background: rgba(30, 60, 120, 0.7);
+      border: 1px solid rgba(100, 160, 220, 0.6);
+      color: #fff; font-size: 1.4rem; padding: 0.4rem 0.8rem;
+      border-radius: 0.6rem; cursor: pointer;
+    }
+    nav { display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem; }
+    nav a {
+      color: #fff; text-decoration: none; font-weight: 500;
+      padding: 0.35rem 0.8rem; border-radius: 1.2rem;
+      font-size: 0.85rem; display: inline-flex;
+      align-items: center; gap: 0.3rem;
+    }
+    nav a i { color: var(--accent); }
+    nav a:hover { background: rgba(77, 168, 218, 0.3); }
+    nav a.active { background: var(--accent); color: #021024; }
+    nav a.active i { color: #021024; }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav {
+        display: none; position: absolute; top: 100%; right: 0;
+        flex-direction: column; gap: 0.5rem; padding: 1rem;
+        background: rgba(3, 12, 38, 0.98);
+        border-radius: 1rem; min-width: 240px;
+        z-index: 1000; margin-top: 0.5rem;
+      }
+      nav.show { display: flex; }
+      nav a { padding: 0.8rem 1.1rem; font-size: 1.05rem; background: rgba(15, 40, 90, 0.7); }
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(100, 160, 220, 0.2);
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+    
+    /* Выпадающий список */
+    .video-selector {
+      position: relative;
+      margin-bottom: 1rem;
+      max-width: 400px;
+    }
+    .video-selector label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+    .video-selector select {
+      width: 100%;
+      padding: 0.7rem 2.5rem 0.7rem 1rem;
+      border-radius: 0.8rem;
+      background: rgba(15, 40, 90, 0.8);
+      color: #fff;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    .video-selector select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .video-selector::after {
+      content: '▼';
+      position: absolute;
+      right: 15px;
+      bottom: 12px;
+      color: var(--accent);
+      pointer-events: none;
+      font-size: 0.7rem;
+    }
+    
+    /* Сетка видео */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .video-item {
+      background: rgba(13, 35, 80, 0.5);
+      border-radius: 0.8rem;
+      overflow: hidden;
+      border: 1px solid #2a4a7a;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .video-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    /* Миниатюра с первым кадром */
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      background: #0d2350;
+      overflow: hidden;
+    }
+    .video-thumbnail video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .video-thumbnail .play-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .video-thumbnail .play-overlay i {
+      font-size: 3rem;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(77, 168, 218, 0.9);
+    }
+    .video-caption {
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    
+    /* Модальное окно с видео */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 5000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal video {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 0.5rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px; right: 25px;
+      font-size: 2.5rem;
+      color: #fff;
+      cursor: pointer;
+      z-index: 5001;
+    }
+    .modal-close:hover { color: var(--accent); }
+    
+    h1 { color: #fff; margin-bottom: 0.5rem; }
+    footer {
+      text-align: center; margin-top: 2rem; color: var(--muted);
+      font-size: 0.85rem; border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    @media (max-width: 480px) {
+      .video-grid { grid-template-columns: 1fr; }
+      .video-thumbnail { height: 150px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="satellite-container">
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="header-left">
+      <span class="logo"><i class="fas fa-satellite"></i> ФПК МИИГАиК · 1994</span>
+      <span class="header-subtitle">Неофициальный сайт выпуска ФПК 1994</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    <nav id="navMenu">
+            <a href="index.html"><i class="fas fa-users"></i> О нас</a>
+      <a href="events.html"><i class="fas fa-calendar-alt"></i> Мероприятия</a>
+      <a href="photos.html"><i class="fas fa-camera"></i> Фото</a>
+      <a href="videos.html" class="active"><i class="fas fa-video"></i> Видео</a>
+      <a href="screenshots.html"><i class="fas fa-desktop"></i> Обои</a>
+      <a href="music.html"><i class="fas fa-music"></i> Музыка</a>
+
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1><i class="fas fa-video" style="color: var(--accent);"></i> Видеоархив</h1>
+      
+      <div class="video-selector">
+        <label>Выберите альбом:</label>
+        <select id="videoSelect" onchange="switchAlbum(this.value)"></select>
+      </div>
+      
+      <div class="video-grid" id="videoGrid"></div>
+    </div>
+  </main>
+  
+  <footer>© Выпускники ФПК МИИГАиК 1994 fpk@ya.ru</footer>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal" id="videoModal">
+  <span class="modal-close" onclick="closeVideoModal()">&times;</span>
+  <video id="videoPlayer" controls autoplay></video>
+</div>
+
+<script>
+  const albums = [
+        {
+      name: 'Все',
+      videos: [
+        { src: 'video.mp4', caption: 'Практика в Чехове 1992' }
+        ,
+        { src: 'Videos\\chehov2.mp4', caption: 'Палаточный лагерь' }
+        ,
+        { src: 'Videos\\chehov3.mp4', caption: 'Геодезические работы' }
+        ,
+        { src: 'Videos\\vypusk1.mp4', caption: 'Выпускной вечер 1994' }
+        ,
+        { src: 'Videos\\vypusk2.mp4', caption: 'Вручение дипломов' }
+        ,
+        { src: 'Videos\\vypusk3.mp4', caption: 'Прощальная речь' }
+        ,
+        { src: 'Videos\\obshaga1.mp4', caption: 'Новогодний капустник 1993' }
+        ,
+        { src: 'Videos\\obshaga2.mp4', caption: 'Песни под гитару' }
+        ,
+        { src: 'Videos\\obshaga3.mp4', caption: 'День рождения старосты' }
+      ]
+    }
+    ,
+    {
+      name: 'deepseek_csv_20260825_674029',
+      videos: [
+        { src: 'video.mp4', caption: 'Практика в Чехове 1992' }
+        ,
+        { src: 'Videos\\chehov2.mp4', caption: 'Палаточный лагерь' }
+        ,
+        { src: 'Videos\\chehov3.mp4', caption: 'Геодезические работы' }
+      ]
+    }
+    ,
+    {
+      name: 'deepseek_csv_20260825_c9aa69',
+      videos: [
+        { src: 'Videos\\vypusk1.mp4', caption: 'Выпускной вечер 1994' }
+        ,
+        { src: 'Videos\\vypusk2.mp4', caption: 'Вручение дипломов' }
+        ,
+        { src: 'Videos\\vypusk3.mp4', caption: 'Прощальная речь' }
+      ]
+    }
+    ,
+    {
+      name: 'deepseek_csv_20260825_e98148',
+      videos: [
+        { src: 'Videos\\obshaga1.mp4', caption: 'Новогодний капустник 1993' }
+        ,
+        { src: 'Videos\\obshaga2.mp4', caption: 'Песни под гитару' }
+        ,
+        { src: 'Videos\\obshaga3.mp4', caption: 'День рождения старосты' }
+      ]
+    }
+
+  ];
+  
+  let currentAlbum = 0;
+  let currentVideos = [];
+  
+  function createStars() {
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement('div');
+      star.className = 'twinkle-star';
+      const size = Math.random() * 3 + 1;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(star);
+    }
+  }
+  
+  function buildSelect() {
+    const select = document.getElementById('videoSelect');
+    select.innerHTML = '';
+    albums.forEach((album, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = album.name;
+      select.appendChild(opt);
+    });
+  }
+  
+  function switchAlbum(index) {
+    currentAlbum = parseInt(index);
+    buildGrid();
+  }
+  
+  function buildGrid() {
+    const grid = document.getElementById('videoGrid');
+    grid.innerHTML = '';
+    currentVideos = albums[currentAlbum].videos;
+    
+    currentVideos.forEach((video, index) => {
+      const div = document.createElement('div');
+      div.className = 'video-item';
+      div.innerHTML = `
+        <div class="video-thumbnail">
+          <video src="${video.src}" preload="metadata" muted></video>
+          <div class="play-overlay">
+            <i class="fas fa-play-circle"></i>
+          </div>
+        </div>
+        <div class="video-caption">${video.caption}</div>
+      `;
+      div.onclick = () => openVideo(index);
+      grid.appendChild(div);
+    });
+    
+    // Загружаем первый кадр для каждого видео
+    loadThumbnails();
+  }
+  
+  // Функция загрузки первого кадра
+  function loadThumbnails() {
+    const videos = document.querySelectorAll('.video-thumbnail video');
+    videos.forEach((video) => {
+      video.addEventListener('loadeddata', () => {
+        video.currentTime = 0.1; // Первый кадр
+      });
+      video.addEventListener('seeked', () => {
+        // Кадр загружен
+      });
+    });
+  }
+  
+  const modal = document.getElementById('videoModal');
+  const videoPlayer = document.getElementById('videoPlayer');
+  
+  function openVideo(index) {
+    videoPlayer.src = currentVideos[index].src;
+    modal.style.display = 'flex';
+    videoPlayer.play();
+  }
+  
+  function closeVideoModal() {
+    modal.style.display = 'none';
+    videoPlayer.pause();
+    videoPlayer.src = '';
+  }
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeVideoModal();
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeVideoModal();
+    }
+  });
+  
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('navMenu');
+  if (toggle && nav) {
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nav.classList.toggle('show');
+    });
+  }
+  
+  buildSelect();
+  buildGrid();
+  createStars();
+</script>
+</body>
+</html>
