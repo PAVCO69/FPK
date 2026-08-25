@@ -1,5 +1,5 @@
 <!-- ============================================ -->
-<!-- Модуль: index.html
+<!-- Модуль: index.html                          -->
 <!-- Название: главная страница (о нас)          -->
 <!-- ============================================ -->
 <!DOCTYPE html>
@@ -16,8 +16,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="ФПК 1994">
-  
-  <!-- Иконки для iOS -->
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23020b24'/%3E%3Ctext x='90' y='115' font-size='70' text-anchor='middle' fill='%234da8da'%3E🚀%3C/text%3E%3C/svg%3E">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -79,13 +77,15 @@
     }
     @keyframes fly { 0%{transform:translateY(0) rotate(-45deg);} 100%{transform:translateY(-120vh) rotate(-45deg); opacity:0;} }
     
-    /* Звёзды */
+    /* Мерцающие звёзды */
     .twinkle-star {
       position: fixed; border-radius: 50%; background: #fff;
       pointer-events: none; z-index: 1;
       animation: starTwinkle 2s infinite;
+      -webkit-animation: starTwinkle 2s infinite;
     }
     @keyframes starTwinkle { 0%,100%{opacity:0.2; transform:scale(1);} 50%{opacity:1; transform:scale(1.8);} }
+    @-webkit-keyframes starTwinkle { 0%,100%{opacity:0.2;} 50%{opacity:1;} }
     
     /* Спутники */
     .satellite-container {
@@ -93,16 +93,29 @@
       pointer-events: none; z-index: 4; overflow: hidden;
     }
     .satellite {
-      position: absolute; font-size: 2rem; color: var(--accent);
-      opacity: 0.8; animation: flySatellite linear infinite;
+      position: absolute;
+      font-size: 2rem;
+      color: var(--accent);
+      opacity: 0.8;
+      animation: flySatellite linear infinite;
+      -webkit-animation: flySatellite linear infinite;
+      text-shadow: 0 0 20px rgba(77, 168, 218, 0.9);
     }
-    .satellite:nth-child(1) { top: 8%; left: -10%; animation-duration: 45s; font-size: 2.8rem; }
-    .satellite:nth-child(2) { top: 28%; left: -15%; animation-duration: 60s; font-size: 2rem; }
-    .satellite:nth-child(3) { top: 55%; left: -5%; animation-duration: 38s; font-size: 3.2rem; }
-    .satellite:nth-child(4) { top: 75%; left: -20%; animation-duration: 52s; font-size: 1.8rem; }
-    .satellite:nth-child(5) { top: 5%; left: -30%; animation-duration: 70s; font-size: 2.5rem; }
-    .satellite:nth-child(6) { top: 45%; left: -10%; animation-duration: 48s; font-size: 2rem; }
-    @keyframes flySatellite { 0%{transform:translateX(0);} 100%{transform:translateX(120vw);} }
+    .satellite:nth-child(1) { top: 8%; left: -10%; animation-duration: 20s; font-size: 2.8rem; }
+    .satellite:nth-child(2) { top: 28%; left: -15%; animation-duration: 25s; font-size: 2rem; }
+    .satellite:nth-child(3) { top: 55%; left: -5%; animation-duration: 18s; font-size: 3.2rem; }
+    .satellite:nth-child(4) { top: 75%; left: -20%; animation-duration: 22s; font-size: 1.8rem; }
+    .satellite:nth-child(5) { top: 5%; left: -30%; animation-duration: 28s; font-size: 2.5rem; }
+    .satellite:nth-child(6) { top: 45%; left: -10%; animation-duration: 15s; font-size: 2rem; }
+    
+    @keyframes flySatellite {
+      0% { transform: translateX(-10vw) rotate(0deg); }
+      100% { transform: translateX(110vw) rotate(360deg); }
+    }
+    @-webkit-keyframes flySatellite {
+      0% { -webkit-transform: translateX(-10vw) rotate(0deg); }
+      100% { -webkit-transform: translateX(110vw) rotate(360deg); }
+    }
     
     .container { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: 1.2rem; }
     header {
@@ -188,6 +201,7 @@
   <button class="launch-btn" id="launchBtn">🚀 ПОЕХАЛИ!</button>
 </div>
 
+<!-- Спутники -->
 <div class="satellite-container">
   <div class="satellite"><i class="fas fa-satellite"></i></div>
   <div class="satellite"><i class="fas fa-satellite"></i></div>
@@ -258,20 +272,12 @@
 </div>
 
 <script>
-  // ============================================
-  // Регистрация Service Worker
-  // ============================================
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker зарегистрирован'))
-        .catch((err) => console.log('Ошибка SW:', err));
+      navigator.serviceWorker.register('sw.js').catch(() => {});
     });
   }
 
-  // ============================================
-  // Звёзды
-  // ============================================
   function createStars() {
     for (let i = 0; i < 100; i++) {
       const star = document.createElement('div');
@@ -287,9 +293,6 @@
     }
   }
 
-  // ============================================
-  // Заставка
-  // ============================================
   const splash = document.getElementById('splashScreen');
   const num = document.getElementById('countdownNumber');
   const txt = document.getElementById('countdownText');
@@ -333,9 +336,6 @@
 
   btn.addEventListener('click', launch);
 
-  // ============================================
-  // Мобильное меню
-  // ============================================
   const toggle = document.getElementById('menuToggle');
   const nav = document.getElementById('navMenu');
 
