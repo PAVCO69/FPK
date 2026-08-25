@@ -1,0 +1,372 @@
+<!-- ============================================ -->
+<!-- Модуль: index.html
+<!-- Название: главная страница (о нас)          -->
+<!-- ============================================ -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>О нас — ФПК МИИГАиК 1994</title>
+  
+  <!-- PWA мета-теги -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#020b24">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ФПК 1994">
+  
+  <!-- Иконки для iOS -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23020b24'/%3E%3Ctext x='90' y='115' font-size='70' text-anchor='middle' fill='%234da8da'%3E🚀%3C/text%3E%3C/svg%3E">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --bg: #020b24;
+      --card-bg: rgba(8, 25, 70, 0.3);
+      --accent: #4da8da;
+      --text: #e6f0ff;
+      --muted: #b0c4de;
+      --border: rgba(100, 160, 220, 0.25);
+      --rocket-color: #ff6b35;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 2rem;
+      background-image: radial-gradient(circle at 20% 30%, #0a2a6a 0%, #020b24 70%);
+      overflow-x: hidden;
+    }
+    
+    /* Заставка */
+    .splash-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: linear-gradient(180deg, #020b24 0%, #0a1a4a 50%, #020b24 100%);
+      z-index: 10000; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .countdown-number {
+      font-size: 8rem; font-weight: 900; color: #fff;
+      text-shadow: 0 0 30px rgba(77, 168, 218, 0.8);
+      z-index: 2; animation: pulse 1s infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+    .countdown-text { font-size: 1.2rem; color: var(--muted); z-index: 2; }
+    .launch-btn {
+      display: none; font-size: 2.5rem; font-weight: 900; color: #fff;
+      background: linear-gradient(135deg, #e04e1d, #ff6b35);
+      border: none; padding: 1.5rem 3rem; border-radius: 4rem;
+      cursor: pointer; z-index: 2; animation: bounce 1s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    .splash-rocket {
+      display: none; font-size: 4rem; color: var(--rocket-color);
+      z-index: 2; animation: shake 0.3s infinite; margin-bottom: 1rem;
+    }
+    @keyframes shake { 0%,100%{transform:rotate(-45deg);} 50%{transform:translateY(-5px) rotate(-45deg);} }
+    .rocket-launching {
+      position: fixed; font-size: 4rem; color: var(--rocket-color);
+      z-index: 9999; pointer-events: none; animation: fly 2s forwards;
+    }
+    @keyframes fly { 0%{transform:translateY(0) rotate(-45deg);} 100%{transform:translateY(-120vh) rotate(-45deg); opacity:0;} }
+    
+    /* Звёзды */
+    .twinkle-star {
+      position: fixed; border-radius: 50%; background: #fff;
+      pointer-events: none; z-index: 1;
+      animation: starTwinkle 2s infinite;
+    }
+    @keyframes starTwinkle { 0%,100%{opacity:0.2; transform:scale(1);} 50%{opacity:1; transform:scale(1.8);} }
+    
+    /* Спутники */
+    .satellite-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 4; overflow: hidden;
+    }
+    .satellite {
+      position: absolute; font-size: 2rem; color: var(--accent);
+      opacity: 0.8; animation: flySatellite linear infinite;
+    }
+    .satellite:nth-child(1) { top: 8%; left: -10%; animation-duration: 45s; font-size: 2.8rem; }
+    .satellite:nth-child(2) { top: 28%; left: -15%; animation-duration: 60s; font-size: 2rem; }
+    .satellite:nth-child(3) { top: 55%; left: -5%; animation-duration: 38s; font-size: 3.2rem; }
+    .satellite:nth-child(4) { top: 75%; left: -20%; animation-duration: 52s; font-size: 1.8rem; }
+    .satellite:nth-child(5) { top: 5%; left: -30%; animation-duration: 70s; font-size: 2.5rem; }
+    .satellite:nth-child(6) { top: 45%; left: -10%; animation-duration: 48s; font-size: 2rem; }
+    @keyframes flySatellite { 0%{transform:translateX(0);} 100%{transform:translateX(120vw);} }
+    
+    .container { position: relative; z-index: 2; width: 100%; max-width: 1100px; padding: 1.2rem; }
+    header {
+      background: rgba(5, 18, 50, 0.55); backdrop-filter: blur(15px);
+      border-radius: 2rem; padding: 0.8rem 1.2rem;
+      border: 1px solid var(--border); margin-bottom: 1.5rem;
+      position: relative; z-index: 100;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center; gap: 0.5rem;
+    }
+    .header-left { display: flex; flex-direction: column; align-items: flex-start; }
+    .logo {
+      font-weight: 700; font-size: 1.4rem;
+      background: linear-gradient(135deg, #c2e2ff, #4da8da);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .header-subtitle { font-size: 0.7rem; color: var(--muted); }
+    .menu-toggle {
+      display: none; background: rgba(30, 60, 120, 0.7);
+      border: 1px solid rgba(100, 160, 220, 0.6);
+      color: #fff; font-size: 1.4rem; padding: 0.4rem 0.8rem;
+      border-radius: 0.6rem; cursor: pointer;
+    }
+    nav { display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem; }
+    nav a {
+      color: #fff; text-decoration: none; font-weight: 500;
+      padding: 0.35rem 0.8rem; border-radius: 1.2rem;
+      font-size: 0.85rem; display: inline-flex;
+      align-items: center; gap: 0.3rem;
+    }
+    nav a i { color: var(--accent); }
+    nav a:hover { background: rgba(77, 168, 218, 0.3); }
+    nav a.active { background: var(--accent); color: #021024; }
+    nav a.active i { color: #021024; }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav {
+        display: none; position: absolute; top: 100%; right: 0;
+        flex-direction: column; gap: 0.5rem; padding: 1rem;
+        background: rgba(3, 12, 38, 0.98);
+        border-radius: 1rem; min-width: 240px;
+        z-index: 1000; margin-top: 0.5rem;
+      }
+      nav.show { display: flex; }
+      nav a { padding: 0.8rem 1.1rem; font-size: 1.05rem; background: rgba(15, 40, 90, 0.7); }
+    }
+    .submenu {
+      display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem;
+      justify-content: center; margin-bottom: 1.5rem;
+    }
+    .submenu a {
+      color: #fff; text-decoration: none; padding: 0.3rem 0.7rem;
+      border-radius: 1rem; font-size: 0.85rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .submenu a i { color: var(--accent); }
+    .submenu a:hover { background: rgba(77, 168, 218, 0.3); }
+    .submenu a.active { background: var(--accent); color: #021024; }
+    .submenu a.active i { color: #021024; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(100, 160, 220, 0.2);
+      border-radius: 1.2rem; padding: 2rem;
+      margin-bottom: 1.5rem; backdrop-filter: blur(4px);
+    }
+    .badge-item {
+      background: rgba(15, 42, 94, 0.5);
+      padding: 0.4rem 1rem; border-radius: 2rem;
+      border: 1px solid rgba(42, 74, 122, 0.5);
+    }
+    h1, h2 { color: #fff; margin-bottom: 1rem; }
+    .footer { text-align: center; margin-top: 2rem; color: var(--muted); font-size: 0.85rem; }
+    @media (max-width: 480px) { .card { padding: 1.2rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Заставка -->
+<div class="splash-screen" id="splashScreen">
+  <div class="countdown-number" id="countdownNumber">5</div>
+  <div class="countdown-text" id="countdownText">приготовьтесь...</div>
+  <div class="splash-rocket" id="splashRocket"><i class="fas fa-rocket"></i></div>
+  <button class="launch-btn" id="launchBtn">🚀 ПОЕХАЛИ!</button>
+</div>
+
+<div class="satellite-container">
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+  <div class="satellite"><i class="fas fa-satellite"></i></div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="header-left">
+      <span class="logo"><i class="fas fa-satellite"></i> ФПК МИИГАиК · 1994</span>
+      <span class="header-subtitle">Неофициальный сайт выпуска ФПК 1994</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+    <nav id="navMenu">
+      <a href="index.html" class="active"><i class="fas fa-users"></i> О нас</a>
+      <a href="events.html"><i class="fas fa-calendar-alt"></i> Мероприятия</a>
+      <a href="photos.html"><i class="fas fa-camera"></i> Фото</a>
+      <a href="videos.html"><i class="fas fa-video"></i> Видео</a>
+      <a href="screenshots.html"><i class="fas fa-desktop"></i> Скриншоты</a>
+      <a href="music.html"><i class="fas fa-music"></i> Музыка</a>
+    </nav>
+  </header>
+
+  <div class="submenu">
+    <a href="index.html" class="active"><i class="fas fa-users"></i> О нас</a>
+    <a href="events.html"><i class="fas fa-calendar-alt"></i> Мероприятия</a>
+    <a href="photos.html"><i class="fas fa-camera"></i> Фото</a>
+    <a href="videos.html"><i class="fas fa-video"></i> Видео</a>
+    <a href="screenshots.html"><i class="fas fa-desktop"></i> Скриншоты</a>
+    <a href="music.html"><i class="fas fa-music"></i> Музыка</a>
+  </div>
+
+  <main>
+    <div class="card">
+      <h1><i class="fas fa-graduation-cap" style="color: var(--accent);"></i> О нас — история с юмором</h1>
+      <p>Факультет прикладной космонавтики, выпуск 1994 года. Нас было 32 человека, и мы свято верили, что после диплома нас сразу заберут в отряд космонавтов. Спойлер: не забрали. Но зато мы научились выживать в общаге, считать звёзды на Чеховском полигоне и отличать теодолит от нивелира с закрытыми глазами.</p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-map-pin"></i> Чеховский полигон — наша вторая родина</h2>
+      <p>Каждое лето нас отправляли на геодезическую практику в Чехов. Это было место, где:</p>
+      <ul style="margin-left: 1.5rem; list-style-type: '🚀 ';">
+        <li>комары были размером с малые спутники;</li>
+        <li>теодолит ловил спутники лучше, чем телевизор;</li>
+        <li>а фраза «закрыть полигон» означала конец смены.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-building"></i> Общага — школа жизни</h2>
+      <p>Общежитие МИИГАиК. Пятиэтажное здание, 4 человека на 32 квадратных метрах, 8 гитар, 12 кастрюль и один туалет. Комендант Валентина Ивановна знала всех по именам.</p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-smile"></i> Факты</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span class="badge-item"><i class="fas fa-user-astronaut"></i> 32 выпускника</span>
+        <span class="badge-item"><i class="fas fa-tent"></i> 3 сезона в Чехове</span>
+        <span class="badge-item"><i class="fas fa-guitar"></i> 27 песен</span>
+      </div>
+    </div>
+  </main>
+
+  <div class="footer"><p>© Выпускники ФПК МИИГАиК 1994 · Синий космос навсегда</p></div>
+</div>
+
+<script>
+  // ============================================
+  // Регистрация Service Worker
+  // ============================================
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker зарегистрирован'))
+        .catch((err) => console.log('Ошибка SW:', err));
+    });
+  }
+
+  // ============================================
+  // Звёзды
+  // ============================================
+  function createStars() {
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'twinkle-star';
+      const size = Math.random() * 3 + 1;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 5 + 's';
+      star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+      document.body.appendChild(star);
+    }
+  }
+
+  // ============================================
+  // Заставка
+  // ============================================
+  const splash = document.getElementById('splashScreen');
+  const num = document.getElementById('countdownNumber');
+  const txt = document.getElementById('countdownText');
+  const btn = document.getElementById('launchBtn');
+  const rocket = document.getElementById('splashRocket');
+  let count = 5;
+
+  function launch() {
+    btn.style.display = 'none';
+    rocket.style.display = 'none';
+    const fly = document.createElement('div');
+    fly.className = 'rocket-launching';
+    fly.innerHTML = '<i class="fas fa-rocket"></i>';
+    fly.style.left = '50%'; fly.style.top = '50%';
+    document.body.appendChild(fly);
+    setTimeout(() => splash.classList.add('hidden'), 500);
+    setTimeout(() => fly.remove(), 2500);
+  }
+
+  function start() {
+    num.textContent = count;
+    const int = setInterval(() => {
+      count--;
+      if (count > 0) {
+        num.textContent = count;
+        num.style.animation = 'none';
+        void num.offsetWidth;
+        num.style.animation = 'pulse 1s infinite';
+        const texts = {4: 'зажигание...', 3: 'предстартовая готовность...', 2: 'ключ на старт...', 1: 'внимание...'};
+        if (texts[count]) txt.textContent = texts[count];
+      } else {
+        clearInterval(int);
+        num.style.display = 'none';
+        txt.style.display = 'none';
+        rocket.style.display = 'block';
+        btn.style.display = 'block';
+        setTimeout(launch, 2000);
+      }
+    }, 1000);
+  }
+
+  btn.addEventListener('click', launch);
+
+  // ============================================
+  // Мобильное меню
+  // ============================================
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('navMenu');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nav.classList.toggle('show');
+    const icon = toggle.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+  });
+
+  nav.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      nav.classList.remove('show');
+      const icon = toggle.querySelector('i');
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('header') && nav.classList.contains('show')) {
+      nav.classList.remove('show');
+      const icon = toggle.querySelector('i');
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+
+  createStars();
+  start();
+</script>
+</body>
+</html>
