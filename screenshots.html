@@ -1,9 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SY5H4Y1XNM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SY5H4Y1XNM');
+</script>
+
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Скриншоты — ФПК МИИГАиК 1994</title>
+  <title>Обои — ФПК МИИГАиК 1994</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
@@ -238,7 +251,7 @@
 
   <main>
     <div class="card">
-      <h1><i class="fas fa-desktop" style="color: var(--accent);"></i> Скриншоты</h1>
+      <h1><i class="fas fa-desktop" style="color: var(--accent);"></i> Обои</h1>
       <div class="album-selector">
         <label>Выберите альбом:</label>
         <select id="albumSelect" onchange="switchAlbum(this.value)"></select>
@@ -255,7 +268,7 @@
   <span class="modal-close" onclick="closeModal()">&times;</span>
   <span class="counter" id="counter"></span>
   <span class="modal-nav modal-prev" onclick="prevPhoto()">&#10094;</span>
-  <img id="modalImage" src="" alt="Скриншот">
+  <img id="modalImage" src="" alt="Обои">
   <span class="modal-nav modal-next" onclick="nextPhoto()">&#10095;</span>
   <button class="slideshow-btn" id="slideshowBtn" onclick="toggleSlideshow()">▶ Слайд-шоу</button>
 </div>
@@ -265,14 +278,14 @@
         {
       name: 'Все',
       photos: [
-        { src: 'https://i.ibb.co/bjM0LtV7/fpk.jpg', caption: '//i.ibb.co/bjM0LtV7/fpk.jpg' }
+        { src: 'https://i.ibb.co/bjM0LtV7/fpk.jpg', caption: 'Полигон' }
       ]
     }
     ,
     {
       name: 'Стандартные',
       photos: [
-        { src: 'https://i.ibb.co/bjM0LtV7/fpk.jpg', caption: '//i.ibb.co/bjM0LtV7/fpk.jpg' }
+        { src: 'https://i.ibb.co/bjM0LtV7/fpk.jpg', caption: 'Полигон' }
       ]
     }
 
